@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, StyleSheet, Text, ScrollView, YellowBox } from "react-native";
 import JSONTree from "react-native-json-tree";
 import * as firebase from "firebase";
+import { Header } from "react-native-elements";
 // import { Card } from "react-native-shadow-cards";
 
 const theme = {
@@ -29,28 +30,45 @@ export default class HomeScreen extends Component {
     YellowBox.ignoreWarnings(["Setting a timer"]);
     super(props);
     this.state = {
-      data: {},
+      data:this.props.navigation.state.params.JSON_ListView_Clicked_Item,
     };
   }
-
-  componentDidMount() {
-    this.fetchDataUser();
-  }
-
-  fetchDataUser = () => {
-    firebase
+  handleRefresh=async()=>{
+    await firebase
       .database()
       .ref()
       .on("value", (snapshot) => {
         this.setState({ data: JSON.parse(JSON.stringify(snapshot)) });
+        
       });
-  };
+  }
   render() {
     return (
+      <View style={{backgroundColor: "#272727",flex:1}}>
+      <Header
+        placement="left"
+        leftComponent={{
+          icon: "arrow-back",
+          color: "#101820FF",
+          onPress: () => this.props.navigation.navigate("Config"),
+        }}
+        centerComponent={{
+          text: "Realtime Database",
+          style: {
+            color: "#272727",
+            fontWeight: "bold",
+            fontSize: 22,
+            letterSpacing: 1,
+          },
+        }}
+        rightComponent={{
+          icon: "refresh",
+          color: "#101820FF",
+          onPress: () => this.handleRefresh(),
+        }}
+        backgroundColor="#FFCA28"
+      />
       <ScrollView style={styles.container}>
-        <View>
-          <Text style={styles.title}>Realtime Database</Text>
-        </View>
         <ScrollView style={styles.container1} horizontal={true}>
           <View style={styles.subcontainer}>
             <JSONTree
@@ -62,6 +80,7 @@ export default class HomeScreen extends Component {
           </View>
         </ScrollView>
       </ScrollView>
+      </View>
     );
   }
 }
@@ -69,20 +88,20 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#272727",
-    paddingBottom: 100,
-    paddingTop:70,
+    paddingBottom: 50,
+    paddingTop: 20,
   },
-  container1:{
+  container1: {
     flex: 1,
-    paddingBottom: 150,
+    paddingBottom: 100,
   },
   subcontainer: {
     margin: 30,
   },
-  title:{
-      fontSize:25,
-      fontWeight:"bold",
-      textAlign:"center",
-      color:"#3DB8FF",
-  }
+  title: {
+    fontSize: 25,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#3DB8FF",
+  },
 });

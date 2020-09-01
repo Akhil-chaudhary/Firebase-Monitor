@@ -12,37 +12,27 @@ import Splash from "./src/screens/Splash";
 import Home from "./src/screens/HomeScreen";
 import * as firebase from "firebase";
 import HomeScreen from "./src/screens/HomeScreen";
+import FormScreen from "./src/screens/FormScreen";
 
 const Appstack = createStackNavigator(
   {
-    Home:HomeScreen,
+    Config:FormScreen,
+    Database:HomeScreen,
   },
   {
-    headerMode: "none"
+    headerMode: "none",
   }
 );
 const navigator = createStackNavigator(
   {
-    Splash: Splash,
+    // Splash: Splash,
     App:Appstack,
   },
   {
-    initialRouteName: "Splash",
-    headerMode: "none"
+    initialRouteName: "App",
+    headerMode: "none",
   }
 );
-var firebaseConfig = {
-  apiKey: "AIzaSyAIl-EpAdZmjnEJAmWyUR2VaeTsD2mup_w",
-  authDomain: "portfolio-1cfc2.firebaseapp.com",
-  databaseURL: "https://portfolio-1cfc2.firebaseio.com",
-  projectId: "portfolio-1cfc2",
-  storageBucket: "portfolio-1cfc2.appspot.com",
-  messagingSenderId: "345848544510",
-  appId: "1:345848544510:web:de617f893f95e18bceb9af"
-};
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
 
 export default createAppContainer(navigator);
 
