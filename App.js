@@ -2,34 +2,22 @@ import {
   createAppContainer
 } from "react-navigation";
 import { createStackNavigator } from 'react-navigation-stack';
-import { StatusBar } from 'expo-status-bar';
-import React from "react";
 import {
   StyleSheet,
-  Text
 } from "react-native";
-import Splash from "./src/screens/Splash";
-import Home from "./src/screens/HomeScreen";
-import * as firebase from "firebase";
 import HomeScreen from "./src/screens/HomeScreen";
+import HistoryScreen from "./src/screens/HistoryScreen";
 import FormScreen from "./src/screens/FormScreen";
 
-const Appstack = createStackNavigator(
+global.history=[];
+const navigator = createStackNavigator(
   {
     Config:FormScreen,
+    History:HistoryScreen,
     Database:HomeScreen,
   },
   {
-    headerMode: "none",
-  }
-);
-const navigator = createStackNavigator(
-  {
-    // Splash: Splash,
-    App:Appstack,
-  },
-  {
-    initialRouteName: "App",
+    initialRouteName: "Config",
     headerMode: "none",
   }
 );

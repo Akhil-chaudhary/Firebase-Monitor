@@ -33,6 +33,9 @@ export default class HomeScreen extends Component {
       data:this.props.navigation.state.params.JSON_ListView_Clicked_Item,
     };
   }
+  componentDidMount=()=>{
+    this.handleRefresh();
+  }
   handleRefresh=async()=>{
     await firebase
       .database()
@@ -68,18 +71,19 @@ export default class HomeScreen extends Component {
         }}
         backgroundColor="#FFCA28"
       />
+      
       <ScrollView style={styles.container}>
-        <ScrollView style={styles.container1} horizontal={true}>
-          <View style={styles.subcontainer}>
-            <JSONTree
-              theme={theme}
-              hideRoot={true}
-              invertTheme={false}
-              data={this.state.data}
-            />
-          </View>
-        </ScrollView>
+      <ScrollView style={styles.container1} horizontal={true}>
+        <View style={styles.subcontainer}>
+          <JSONTree
+            theme={theme}
+            hideRoot={true}
+            invertTheme={false}
+            data={this.state.data}
+          />
+        </View>
       </ScrollView>
+    </ScrollView>
       </View>
     );
   }
