@@ -21,7 +21,7 @@ export default class HistoryScreen extends Component {
     const HistoryList = () => {
       var i = 0;
       if (global.history.length > 0) {
-        return global.history.map((element) => {
+        return global.history.reverse().map((element) => {
           if (typeof element != "undefined" && element != null) {
             i++;
             // console.log(element);
@@ -101,6 +101,7 @@ export default class HistoryScreen extends Component {
         />
         <ScrollView style={styles.container}>
           <HistoryList />
+          <View style={{padding:20}}></View>
         </ScrollView>
       </View>
     );

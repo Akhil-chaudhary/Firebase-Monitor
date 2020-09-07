@@ -6,7 +6,6 @@ import HomeScreen from "./src/screens/HomeScreen";
 import HistoryScreen from "./src/screens/HistoryScreen";
 import FormScreen from "./src/screens/FormScreen";
 
-global.history=[];
 const navigator = createStackNavigator(
   {
     Config:FormScreen,

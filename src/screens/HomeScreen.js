@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text, ScrollView, YellowBox } from "react-native";
+import { View, StyleSheet, Text, ScrollView, YellowBox,AsyncStorage} from "react-native";
 import JSONTree from "react-native-json-tree";
 import * as firebase from "firebase";
 import { Header } from "react-native-elements";
@@ -35,6 +35,7 @@ export default class HomeScreen extends Component {
     };
   }
   componentDidMount=()=>{
+  AsyncStorage.setItem("myKey", JSON.stringify(global.history));
     this.handleRefresh();
   }
   handleRefresh=async()=>{

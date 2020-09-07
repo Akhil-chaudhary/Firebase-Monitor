@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Linking,
   Clipboard,
+  AsyncStorage,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
@@ -32,43 +33,44 @@ export default class HomeScreen extends Component {
       data: {},
     };
   }
-  fetchCopiedText = async () => {
-    const copied = await Clipboard.getString();
-    this.setState({ copied });
-  };
+  
+  // fetchCopiedText = async () => {
+  //   const copied = await Clipboard.getString();
+  //   this.setState({ copied });
+  // };
   componentDidMount() {
     setInterval(() => {
       this.fetchCopiedText();
     }, 1000);
   }
-  copyapiKey = () => {
-    this.state.apiKey = this.state.copied;
-    this.state.copied = "";
-  };
-  copyauthDomain = () => {
-    this.state.authDomain = this.state.copied;
-    this.state.copied = "";
-  };
-  copydatabaseURL = () => {
-    this.state.databaseURL = this.state.copied;
-    this.state.copied = "";
-  };
-  copyprojectId = () => {
-    this.state.projectId = this.state.copied;
-    this.state.copied = "";
-  };
-  copystorageBucket = () => {
-    this.state.storageBucket = this.state.copied;
-    this.state.copied = "";
-  };
-  copymessagingSenderId = () => {
-    this.state.messagingSenderId = this.state.copied;
-    this.state.copied = "";
-  };
-  copyappId = () => {
-    this.state.appId = this.state.copied;
-    this.state.copied = "";
-  };
+  // copyapiKey = () => {
+  //   this.state.apiKey = this.state.copied;
+  //   this.state.copied = "";
+  // };
+  // copyauthDomain = () => {
+  //   this.state.authDomain = this.state.copied;
+  //   this.state.copied = "";
+  // };
+  // copydatabaseURL = () => {
+  //   this.state.databaseURL = this.state.copied;
+  //   this.state.copied = "";
+  // };
+  // copyprojectId = () => {
+  //   this.state.projectId = this.state.copied;
+  //   this.state.copied = "";
+  // };
+  // copystorageBucket = () => {
+  //   this.state.storageBucket = this.state.copied;
+  //   this.state.copied = "";
+  // };
+  // copymessagingSenderId = () => {
+  //   this.state.messagingSenderId = this.state.copied;
+  //   this.state.copied = "";
+  // };
+  // copyappId = () => {
+  //   this.state.appId = this.state.copied;
+  //   this.state.copied = "";
+  // };
   handleClick = () => {
     Linking.openURL("https://akhilchaudhary.in/").catch((err) =>
       console.error("An error occurred", err)
@@ -118,6 +120,15 @@ export default class HomeScreen extends Component {
       });
   };
 
+  componentDidMount(){
+global.history=[];
+    AsyncStorage.getItem("myKey").then((value) => {
+      global.history.push(...JSON.parse(value));
+      // console.log(global.history);
+        // this.setState({"myKey": value});
+    }).done();
+
+}
   render() {
     
     try{
@@ -146,7 +157,6 @@ export default class HomeScreen extends Component {
           />
           <KeyboardAvoidingView
             style={styles.subcontainer}
-            behavior="padding"
             enabled
           >
             <View
@@ -197,7 +207,7 @@ export default class HomeScreen extends Component {
                 onChangeText={(apiKey) => this.setState({ apiKey })}
                 value={this.state.apiKey}
               />
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.closeButtonParent}
                 onPress={this.copyapiKey.bind()}
               >
@@ -205,7 +215,7 @@ export default class HomeScreen extends Component {
                   style={styles.closeButton}
                   source={require("../../assets/paper.png")}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={styles.parent}>
               <TextInput
@@ -216,7 +226,7 @@ export default class HomeScreen extends Component {
                 onChangeText={(authDomain) => this.setState({ authDomain })}
                 value={this.state.authDomain}
               />
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.closeButtonParent}
                 onPress={this.copyauthDomain.bind()}
               >
@@ -224,7 +234,7 @@ export default class HomeScreen extends Component {
                   style={styles.closeButton}
                   source={require("../../assets/paper.png")}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={styles.parent}>
               <TextInput
@@ -235,7 +245,7 @@ export default class HomeScreen extends Component {
                 onChangeText={(databaseURL) => this.setState({ databaseURL })}
                 value={this.state.databaseURL}
               />
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.closeButtonParent}
                 onPress={this.copydatabaseURL.bind()}
               >
@@ -243,7 +253,7 @@ export default class HomeScreen extends Component {
                   style={styles.closeButton}
                   source={require("../../assets/paper.png")}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={styles.parent}>
               <TextInput
@@ -254,7 +264,7 @@ export default class HomeScreen extends Component {
                 onChangeText={(projectId) => this.setState({ projectId })}
                 value={this.state.projectId}
               />
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.closeButtonParent}
                 onPress={this.copyprojectId.bind()}
               >
@@ -262,7 +272,7 @@ export default class HomeScreen extends Component {
                   style={styles.closeButton}
                   source={require("../../assets/paper.png")}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={styles.parent}>
               <TextInput
@@ -275,7 +285,7 @@ export default class HomeScreen extends Component {
                 }
                 value={this.state.storageBucket}
               />
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.closeButtonParent}
                 onPress={this.copystorageBucket.bind()}
               >
@@ -283,7 +293,7 @@ export default class HomeScreen extends Component {
                   style={styles.closeButton}
                   source={require("../../assets/paper.png")}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={styles.parent}>
               <TextInput
@@ -296,7 +306,7 @@ export default class HomeScreen extends Component {
                 }
                 value={this.state.messagingSenderId}
               />
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.closeButtonParent}
                 onPress={this.copymessagingSenderId.bind()}
               >
@@ -304,7 +314,7 @@ export default class HomeScreen extends Component {
                   style={styles.closeButton}
                   source={require("../../assets/paper.png")}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={styles.parent}>
               <TextInput
@@ -315,7 +325,7 @@ export default class HomeScreen extends Component {
                 onChangeText={(appId) => this.setState({ appId })}
                 value={this.state.appId}
               />
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.closeButtonParent}
                 onPress={this.copyappId.bind()}
               >
@@ -323,7 +333,7 @@ export default class HomeScreen extends Component {
                   style={styles.closeButton}
                   source={require("../../assets/paper.png")}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             {/*             
           <TextInput
@@ -343,7 +353,7 @@ export default class HomeScreen extends Component {
           </KeyboardAvoidingView>
           <Text
             onPress={this.handleClick}
-            style={{ textAlign: "center", marginTop: 20, color: "#F5F5F5" }}
+            style={{ textAlign: "center", marginTop: 20, color: "#F5F5F5",marginBottom:25, }}
           >
             Made with ❤ by Akhil Chaudhary
           </Text>
@@ -358,7 +368,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#272727",
     // alignItems: "center",
     // justifyContent: "center",
-    paddingTop: 100,
   },
   parent: {
     marginHorizontal: 15,
@@ -385,7 +394,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   spinnerTextStyle: {
-    color: "#FFCA28",
+    color: "#FFF",
     width: 100,
   },
   container1: {
@@ -393,8 +402,10 @@ const styles = StyleSheet.create({
     paddingBottom: 150,
   },
   subcontainer: {
+    marginTop:105,
     backgroundColor: "#FFF",
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingTop:15,
     borderRadius: 10,
     marginHorizontal: 20,
     // alignContent: "center",
