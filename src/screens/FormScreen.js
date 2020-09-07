@@ -90,7 +90,7 @@ export default class HomeScreen extends Component {
       appId: this.state.appId,
     };
     if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
+      await firebase.initializeApp(firebaseConfig);
     }
     this.setState({ spinner: true });
     global.history.push(firebaseConfig);

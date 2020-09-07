@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, ScrollView, YellowBox } from "react-native";
 import JSONTree from "react-native-json-tree";
 import * as firebase from "firebase";
 import { Header } from "react-native-elements";
+import {Restart} from 'fiction-expo-restart';
 // import { Card } from "react-native-shadow-cards";
 
 const theme = {
@@ -53,7 +54,7 @@ export default class HomeScreen extends Component {
         leftComponent={{
           icon: "arrow-back",
           color: "#101820FF",
-          onPress: () => this.props.navigation.navigate("Config"),
+          onPress: () => Restart(),
         }}
         centerComponent={{
           text: "Realtime Database",
