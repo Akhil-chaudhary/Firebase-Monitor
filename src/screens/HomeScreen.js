@@ -35,7 +35,7 @@ export default class HomeScreen extends Component {
     };
   }
   componentDidMount=()=>{
-  AsyncStorage.setItem("myKey", JSON.stringify(global.history));
+  AsyncStorage.setItem("historyFirebase", JSON.stringify(global.history));
     this.handleRefresh();
   }
   handleRefresh=async()=>{

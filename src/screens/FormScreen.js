@@ -33,7 +33,7 @@ export default class HomeScreen extends Component {
       data: {},
     };
   }
-  
+
   // fetchCopiedText = async () => {
   //   const copied = await Clipboard.getString();
   //   this.setState({ copied });
@@ -76,12 +76,31 @@ export default class HomeScreen extends Component {
       console.error("An error occurred", err)
     );
   };
+  handleParse = async () => {
+    var configList = this.state.config
+      .replace(/(\r\n|\n|\r)/gm, "")
+      .replace("{", "")
+      .replace("}", "")
+      .split(",");
+    for (var i = 0; i < configList.length; i++) {
+      // console.log();
+      configList[i] = configList[i].split('"')[1];
+    }
+
+    this.setState({
+      apiKey: configList[0],
+      authDomain: configList[1],
+      databaseURL: configList[2],
+      projectId: configList[3],
+      storageBucket: configList[4],
+      messagingSenderId: configList[5],
+      appId: configList[6],
+    });
+    // console.log(configList);
+  };
   handleSubmit = async () => {
-    // console.log((this.state.config.replace(/\s+/g, '')));
-    // var firebaseConfig = JSON.parse(tmp.replace('0',(this.state.config.replace(/\s+/g, ''))));
-    // this.state.config=((((((((this.state.config).replace('apiKey','"apiKey"')).replace('authDomain','"authDomain"')).replace('databaseURL','"databaseURL"')).replace('projectId','"projectId"')).replace('storageBucket','"storageBucket"')).replace('messagingSenderId','"messagingSenderId"')).replace('appId','"appId"'));
-    // console.log(((JSON.stringify(this.state.config.replace(/\s+/g, ''))).replace(/\\/g, '')));
-    // var firebaseConfig=JSON.parse(((JSON.stringify(this.state.config.replace(/\s+/g, ''))).replace(/\\/g, '')));
+    
+    try{
     var firebaseConfig = {
       apiKey: this.state.apiKey,
       authDomain: this.state.authDomain,
@@ -118,35 +137,40 @@ export default class HomeScreen extends Component {
           data: {},
         });
       });
+    }
+    catch{
+
+    }
   };
 
-  componentDidMount(){
-global.history=[];
-    AsyncStorage.getItem("myKey").then((value) => {
-      global.history.push(...JSON.parse(value));
-      // console.log(global.history);
-        // this.setState({"myKey": value});
-    }).done();
-
-}
+  componentDidMount() {
+    global.history = [];
+    AsyncStorage.getItem("historyFirebase")
+      .then((value) => {
+        try{
+        global.history.push(...JSON.parse(value));
+      }
+      catch{}
+        // console.log(global.history);
+        // this.setState({"historyFirebase": value});
+      })
+      .done();
+  }
   render() {
-    
-    try{
+    try {
       // console.log(this.props.navigation.state.params.index);
       this.setState({
-        apiKey:this.props.navigation.state.params.index.apiKey,
+        apiKey: this.props.navigation.state.params.index.apiKey,
         authDomain: this.props.navigation.state.params.index.authDomain,
         databaseURL: this.props.navigation.state.params.index.databaseURL,
         projectId: this.props.navigation.state.params.index.projectId,
         storageBucket: this.props.navigation.state.params.index.storageBucket,
-        messagingSenderId: this.props.navigation.state.params.index.messagingSenderId,
+        messagingSenderId: this.props.navigation.state.params.index
+          .messagingSenderId,
         appId: this.props.navigation.state.params.index.appId,
       });
-      this.props.navigation.state.params.index=null;
-    }
-    catch{
-      
-    }
+      this.props.navigation.state.params.index = null;
+    } catch {}
     return (
       <View style={{ backgroundColor: "#272727", flex: 1 }}>
         <ScrollView style={styles.container}>
@@ -155,10 +179,7 @@ global.history=[];
             textContent={"Verifying.."}
             textStyle={styles.spinnerTextStyle}
           />
-          <KeyboardAvoidingView
-            style={styles.subcontainer}
-            enabled
-          >
+          <KeyboardAvoidingView style={styles.subcontainer} enabled>
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
@@ -197,6 +218,34 @@ global.history=[];
                   />
                 </TouchableOpacity>
               </View>
+            </View>
+            <View style={styles.parent}>
+              <TextInput
+                placeholder="config"
+                placeholderTextColor="#272727"
+                style={styles.textInput}
+                autoCapitalize="none"
+                multiline={true}
+                numberOfLines={8}
+                onChangeText={(config) => this.setState({ config })}
+                value={this.state.config}
+              />
+
+              <TouchableOpacity
+                style={[
+                  styles.closeButtonParent,
+                  {
+                    backgroundColor: "#FFCA28",
+                    margin: 5,
+                    padding: 5,
+                    borderRadius: 5,
+                    marginLeft: -15,
+                  },
+                ]}
+                onPress={this.handleParse}
+              >
+                <Text>PARSE</Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.parent}>
               <TextInput
@@ -353,7 +402,12 @@ global.history=[];
           </KeyboardAvoidingView>
           <Text
             onPress={this.handleClick}
-            style={{ textAlign: "center", marginTop: 20, color: "#F5F5F5",marginBottom:25, }}
+            style={{
+              textAlign: "center",
+              marginTop: 20,
+              color: "#F5F5F5",
+              marginBottom: 25,
+            }}
           >
             Made with ❤ by Akhil Chaudhary
           </Text>
@@ -371,7 +425,7 @@ const styles = StyleSheet.create({
   },
   parent: {
     marginHorizontal: 15,
-    marginVertical: 20,
+    marginVertical: 15,
     borderColor: "gray",
     borderRadius: 5,
     borderWidth: 1,
@@ -402,10 +456,10 @@ const styles = StyleSheet.create({
     paddingBottom: 150,
   },
   subcontainer: {
-    marginTop:105,
+    marginTop: 105,
     backgroundColor: "#FFF",
     paddingHorizontal: 15,
-    paddingTop:15,
+    paddingTop: 15,
     borderRadius: 10,
     marginHorizontal: 20,
     // alignContent: "center",
