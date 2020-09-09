@@ -21,7 +21,7 @@ export default class HistoryScreen extends Component {
     const HistoryList = () => {
       var i = 0;
       if (global.history.length > 0) {
-        return global.history.reverse().map((element) => {
+        return global.history.slice().reverse().map((element) => {
           if (typeof element != "undefined" && element != null) {
             i++;
             // console.log(element);

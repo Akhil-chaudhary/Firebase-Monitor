@@ -4,11 +4,13 @@ import {
   StyleSheet,
   Text,
   ScrollView,
+  SafeAreaView,
   Image,
   YellowBox,
   KeyboardAvoidingView,
   Linking,
   Clipboard,
+  StatusBar,
   AsyncStorage,
 } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
@@ -38,11 +40,11 @@ export default class HomeScreen extends Component {
   //   const copied = await Clipboard.getString();
   //   this.setState({ copied });
   // };
-  componentDidMount() {
-    setInterval(() => {
-      this.fetchCopiedText();
-    }, 1000);
-  }
+  // componentDidMount() {
+  //   setInterval(() => {
+  //     this.fetchCopiedText();
+  //   }, 1000);
+  // }
   // copyapiKey = () => {
   //   this.state.apiKey = this.state.copied;
   //   this.state.copied = "";
@@ -172,7 +174,8 @@ export default class HomeScreen extends Component {
       this.props.navigation.state.params.index = null;
     } catch {}
     return (
-      <View style={{ backgroundColor: "#272727", flex: 1 }}>
+      <SafeAreaView style={{ backgroundColor: "#272727", flex: 1 }}>
+        <StatusBar backgroundColor="#FFCA28" barStyle="dark-content" />
         <ScrollView style={styles.container}>
           <Spinner
             visible={this.state.spinner}
@@ -412,7 +415,7 @@ export default class HomeScreen extends Component {
             Made with ❤ by Akhil Chaudhary
           </Text>
         </ScrollView>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -456,13 +459,13 @@ const styles = StyleSheet.create({
     paddingBottom: 150,
   },
   subcontainer: {
-    marginTop: 105,
+    marginTop: 100,
     backgroundColor: "#FFF",
     paddingHorizontal: 15,
     paddingTop: 15,
     borderRadius: 10,
     marginHorizontal: 20,
-    // alignContent: "center",
+    alignContent: "center",
     // justifyContent: "center",
     flex: 1,
   },
