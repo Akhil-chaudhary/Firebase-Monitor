@@ -1,4 +1,4 @@
-![Firebase-Monitor](https://i.ibb.co/bdmb7zF/output-onlinepngtools-10.png)
+![Firebase-Monitor](https://i.ibb.co/98mS265/firebase-app.png)
 # Firebase-Monitor
 
 A simple React-native app for retrieving realtime database data and showing it using json tree.
